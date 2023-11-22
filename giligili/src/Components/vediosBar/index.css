@@ -1,0 +1,27 @@
+.vedioList {
+    overflow: auto;
+}
+
+ul {
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+
+}
+
+video {
+    border: 6px;
+    width: 226px;
+    height: 340px;
+    background: black;
+}
+
+li {
+    list-style: none;
+    margin-left: 12px;
+    padding: 0px;
+
+}
+
+
+
