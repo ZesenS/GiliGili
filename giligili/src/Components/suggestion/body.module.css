@@ -1,0 +1,151 @@
+
+.main {
+    width: 500px;
+    margin: 0 auto;
+    height: 100vh;
+    overflow: auto;
+}
+
+.typeArea {
+    width: 480px;
+    margin: 0 auto;
+}
+
+#content {
+    height: 415px;
+    margin-top: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#content video {
+    width: 100%;
+    height: 350px;
+    border-radius: 5px 5px 0 0;
+    object-fit: fill;
+}
+
+#content > div > div:first-child {
+    float: left;
+    width: 390px;
+    height: 65px;
+}
+
+#content > div > div:first-child h4 {
+    margin: 6px 0 0 8px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+#content > div > div:first-child > div {
+    margin: 2px 0 0 8px;
+    font-size: 13px;
+    color: #636773;
+}
+#content > div > div:first-child > div span {
+    color: #FD6131;
+}
+
+#content > div > div:first-child > div > span > span{
+    display: inline-block;
+    margin-right: 3px;
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #FD6131;
+    color: #fff;
+    text-align: center;
+}
+
+#content > div > div:last-child {
+    position: relative;
+    float: left;
+    width: 90px;
+    height: 65px;
+}
+
+#content > div > div:last-child > img {
+    margin-top: 15px;
+}
+
+#content > div > div:last-child > span {
+    position: absolute;
+    top: 5px;
+    left: 17px;
+    font-size: 13px;
+    color: #636773;
+}
+
+#content > div > div:last-child > div {
+    float: right;
+    font-size: 20px;
+    margin: 17px 7px 0 0;
+    color: #636773;
+    font-weight: bold;
+}
+
+/* 短视频部分 */
+#shortVideos>div {
+    height: 383px;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.videoList {
+    overflow: auto;
+}
+
+#shortVideos>div>div>ul {
+    display: flex;
+}
+
+.videoList ul li video {
+    float: left;
+    width: 238px;
+    height: 335px;
+    margin: 15px 2px 0 0;
+    background: black;
+    border: 0 0 5px 5px;
+}
+
+#shortVideos>div>.channelName {
+    width: 100%;
+    height: 33px;
+}
+
+#shortVideos>div>.channelName>h3 {
+    float: left;
+    margin: 7px 0 0 5px;
+    color: #636773;
+
+}
+
+#shortVideos>div>.channelName>button {
+    float: right;
+}
+
+#shortVideos>div>.channelName>button {
+    float: right;
+    margin: 12px 8px 0 0;
+    border: none;
+    color: #636773;;
+    font: inherit;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+    background-color: transparent;
+}
+
+#line {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: red;
+  }
+

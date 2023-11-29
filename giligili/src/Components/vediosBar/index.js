@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import './index.css'
+import bodyCss from "../suggestion/body.module.css"
 function Video(props) {
   const vedioScroll = useRef(null);
 
@@ -13,7 +13,7 @@ function Video(props) {
   }
   return (
     <>
-      <div className="vedioList" ref={vedioScroll} onWheel={handleScroll}>
+      <div className={bodyCss.videoList} ref={vedioScroll} onWheel={handleScroll}>
         <ul>
           {props.list.map((video) => (
             <li key={video.id}>

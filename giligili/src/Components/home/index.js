@@ -1,129 +1,66 @@
-import Video from "../vediosBar";
-import './home.css'
-import { useEffect, useRef, useState } from "react";
-import { debounce } from "lodash";
-import { http } from "../../utils/request";
+
+import headerCss from './header.module.css'
+import { connect } from "react-redux";
+import giligili from "../../data/images/giligili.jpg";
+import magnifier from "../../data/images/magnifier.png";
+import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
-function Home() {
-    const [allVideos, setAllVideos] = useState([]);
-    const scrolling = useRef(false);
-    const [ready, setReady] = useState(false); 
-    const [playingVideos, setPlayingVideos] = useState([]);
-    const [fuunyVideos, setFunnyVideos] = useState([]);
-    const [musicVideos, setMusicVideos] = useState([]);
-    const isInView = (video) => {
-      const {top, bottom, left, right} = video.getBoundingClientRect();
-      const isHorizonral = 0 < left && right < window.innerWidth;
-      const isVerticle = top < window.innerHeight/2 && window.innerHeight/2 < bottom
-      return isHorizonral && isVerticle;
-    }
-    const checkScrolling = debounce(() => {
-      let currentPlaying = [];
-      scrolling.current = false;
-      allVideos.forEach(v => {
-        const result = isInView(v);
-        if(result){
-          currentPlaying.push(v.getAttribute('data-vedio-id').toString());
-        }
-        setPlayingVideos(currentPlaying);
-        playVideos(currentPlaying);
-  
-  
-      })
-    }, 500);
-  
-    function saveVideos(videos) {
-      const videoSet = [];
-      for (const key in videos) {
-        videoSet.push({
-          "id": key,
-          "src": `http://localhost:8000/video/${videos[key]}`
-        });
-      }
-      return videoSet;
-    }
-    
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await http.get('http://127.0.0.1:8000/video/');
-          const funny = saveVideos(response.data.funny);
-          const music = saveVideos(response.data.music);
-          setFunnyVideos(funny);
-          setMusicVideos(music);
-    
-          const firstPlaying = ["1", "2"];
-          setPlayingVideos(firstPlaying);
-          setReady(true);
-          setTimeout(() => {
-            playVideos(firstPlaying);
-            setAllVideos(document.querySelectorAll("video"));
-          }, 1000); // 1秒延迟，你可以调整这个时间
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-    
-      fetchData();
-    }, []);
-    const playVideos = (ids) => {
-      ids.forEach(id => {
-        const videoElement = document.querySelector('[data-vedio-id="' + id + '"]');
-        console.log(videoElement);
-        if (videoElement && videoElement.paused) {
-          try {
-            if(ready){
-              videoElement.play();
-            }
-          } catch (error) {
-            console.error("Error while trying to play the video:", error);
-          }
-        }
-      });
-    }
-  
-    const pasueVideos = (ids) => {
-      ids.forEach(id => {
-        const videoElement = document.querySelector('[data-vedio-id="' + id + '"]');
-        if (videoElement && !videoElement.paused) {
-          try {
-            videoElement.pause();
-            videoElement.currentTime = 0;
-          } catch (error) {
-            console.error("Error while trying to pause the video:", error);
-          }
-        }
-      });
-    }
-  
-    const onScroll = () => {
-      let scrollTimeout;
-      clearTimeout(scrollTimeout);
-      scrolling.current = true;
-      pasueVideos(playingVideos);
-      checkScrolling();
-  
-    }
-  
-  
-    return (
-      <div>
-        <div id="line"></div>
-        <div id="main" onScroll={onScroll}>
-          <div className="poster"></div>
-          <h2>视频1</h2>
-          <Video list={fuunyVideos}></Video>
-          <h2>视频2</h2>
-          <Video list={musicVideos}></Video>
-          <h2>视频3</h2>
-          <Video list={musicVideos}></Video>
-  
+const Home = (props) => {
+  const navigate = useNavigate();
+  const [currentChannel, setChannel] = useState(2);
+  const goProfile = () => {
+    navigate("/profile", { state: { name: props.name } });
+    setChannel(5);
+  };
+
+  const goSuggestion = () => {
+    navigate("/", { state: { name: props.name } });
+    setChannel(2);
+
+  }
+  return (
+    <div>
+      <div id={headerCss.line}></div>
+      <div id={headerCss.main}>
+        <div id={headerCss.header}>
+          <div id={headerCss.navigation}>
+            <div></div>
+            <div>
+              <img src={magnifier} alt=""></img>
+              <input type="输入搜索"></input>
+            </div>
+            <div>
+              <button></button>
+              <div>33</div>
+              <img src={giligili} alt=""></img>
+            </div>
+
+          </div>
+          <div id={headerCss.channels}>
+            <ul>
+              <li className={currentChannel === 1 ? headerCss.current : ""}>直播</li>
+              <li className={currentChannel === 2 ? headerCss.current : ""} onClick={goSuggestion}>推荐</li>
+              <li className={currentChannel === 3 ? headerCss.current : ""}>热门</li>
+              <li className={currentChannel === 4 ? headerCss.current : ""}>追番</li>
+              <li className={currentChannel === 5 ? headerCss.current : ""} onClick={goProfile}>个人</li>
+            </ul>
+          </div>
         </div>
       </div>
-      
-    );
-  }
-  
-  export default Home;
-  
+      <Outlet></Outlet>
+    </div>
+
+  );
+}
+
+
+const mapStateToProps = (state) => {
+  return state;
+
+}
+
+
+export default connect(mapStateToProps)(Home);
